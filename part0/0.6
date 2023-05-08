@@ -1,0 +1,10 @@
+note left of browser: client creates a new note and clicks the submit button
+
+note over browser: browser creates a new note and converts it to JSON
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+note over server: server adds a new note to the notes page
+
+
+server-->browser: status code 201 + content: [{content: "test",date: "2023-05-08T03:35:20.326Z"}, ...]
