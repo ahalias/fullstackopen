@@ -10,14 +10,12 @@ return (
 const Content = (props) => {
   return (
     <div>
-<p>
-  <Part part={props.parts[0]} exercise={props.exercises[0]}/>
-  <Part part={props.parts[1]} exercise={props.exercises[1]}/>
-  <Part part={props.parts[2]} exercise={props.exercises[2]}/>
-</p>
-</div>
-  )
-}
+      {props.parts.map((part, index) => (
+        <Part part={part} exercise={props.exercises[index]} />
+      ))}
+    </div>
+  );
+};
 
 const Part = (props) => {
   return (
