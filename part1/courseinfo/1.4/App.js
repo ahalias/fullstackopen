@@ -11,7 +11,7 @@ const Content = (props) => {
   return (
     <div>
       {props.parts.map((part, index) => (
-        <Part part={part} exercise={props.exercises[index]} />
+        <Part key={index} part={part.name} exercise={part.exercises} />
       ))}
     </div>
   );
@@ -27,7 +27,7 @@ const Part = (props) => {
 
 const Total = (props) => {
   return (
-    <p>Number of exercises {props.ex1 + props.ex2 + props.ex3} </p>
+    <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises} </p>
   )
 }
 
@@ -52,8 +52,8 @@ const App = () => {
   return (
     <div>
       <Header course={course} />
-      <Content parts={[parts[0].name, parts[1].name, parts[2].name]} exercises={[parts[0].exercises, parts[1].exercises, parts[2].exercises]} />
-      <Total ex1={parts[0].exercises} ex2={parts[1].exercises} ex3={parts[2].exercises} />
+      <Content parts={parts} />
+      <Total parts={parts} />
     </div>
   )
 }
