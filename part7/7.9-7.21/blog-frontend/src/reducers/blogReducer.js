@@ -9,7 +9,7 @@ name: 'blogs',
 initialState: [],
 reducers: {
 getAllBlogs(state, action) {
-    return action.payload.sort((a, b) => b.likes - a.likes)
+    return action.payload
 },
 addBlog(state, action) {
     state.push(action.payload)
@@ -29,7 +29,7 @@ export const retrieveBlogs = () => {
         blogService
         .getAll()
         .then(blogs => {
-            console.log(blogs)
+            blogs.sort((a, b) => b.likes - a.likes)
             dispatch(getAllBlogs(blogs))
         })
     }

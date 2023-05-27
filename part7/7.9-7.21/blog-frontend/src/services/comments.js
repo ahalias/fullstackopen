@@ -3,13 +3,18 @@ const baseUrl = '/api/blogs'
 
 
 const getComments = async (id) => {
-    const request = await axios.get(`${baseUrl}/${id}/comments`)
-    return request.data
+    const response = await axios.get(`${baseUrl}/${id}/comments`)
+    return response.data
 }
 
 const postComment = async (comment, id) => {
-    const request = await axios.post(`${baseUrl}/${id}/comments`, comment)
-    return request.data
+    
+    const newObj = {
+        body: comment.comment,
+        blog: comment.id
+    }
+    const response = await axios.post(`${baseUrl}/${comment.id}/comments`, newObj)
+    return response.data
 }
 
 export default { getComments, postComment }

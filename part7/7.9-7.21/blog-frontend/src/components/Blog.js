@@ -8,6 +8,7 @@ import userContext from "../context"
 import { useNavigate } from 'react-router-dom'
 import commentService from '../services/comments'
 import { TextField, Button } from '@mui/material'
+import { useQuery } from 'react-query'
 
 
 
@@ -46,23 +47,19 @@ const Blog = () => {
 
 const [likes, setLikes] = useState(0)
 const [comments, setComments] = useState([])
-const [comment, setComment] = useState('')
+const [comment, setComment] = useState([])
 
 
-
-
-console.log(blogs)
 const blog = blogs.find(blog => blog.id === id)
 
 useEffect(() =>{
   commentService
   .getComments(blog.id)
   .then(response => {
-    console.log(response)
     setComments(response)
   })
   
-}, [])
+}, [blog.id])
 
 
 useEffect(() =>{
@@ -74,10 +71,11 @@ const handleCommentChange = (event) => {
   setComment(event.target.value)
 }
 
-const handleCommentSubmit = () => {
-  commentService.postComment({id: blog.id, body: comment}).then(response => {
-    setComments(comments => comments.concat(response))
-  })
+const handleCommentSubmit = async (event) => {
+  event.preventDefault()
+  const response = await commentService.postComment({id: blog.id, comment})
+  setComments(oldComments => [...oldComments, response])
+  setComment('')
 } 
 
 
