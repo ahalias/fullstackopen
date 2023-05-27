@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Users from './components/Users'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -28,7 +28,16 @@ import styled from 'styled-components'
 
 
 
+const Nav = styled.nav`
+padding: 10px 10px 10px 5px;
+margin: 10px 10px 10px 5px;
+background: aqua;
+`
 
+const menuElement = {
+  padding: 2,
+  margin: 2,
+  }
 
 
 const App = () => {
@@ -40,7 +49,14 @@ const App = () => {
   const user = useSelector(store => store.user)
 const blogs = useSelector(store => store.blogs)
 
-
+useEffect(() => {
+  const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+  if (loggedUserJSON) {
+    const user = JSON.parse(loggedUserJSON)
+    dispatch(addUser(user))
+    blogService.setToken(user.token)
+  }
+}, [dispatch])
 
 
   const handleLogin = async (event) => {
@@ -58,7 +74,6 @@ const blogs = useSelector(store => store.blogs)
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.log(exception)
       dispatch(showMessage('Wrong username or password', 5))
       setUsername('')
       setPassword('')
@@ -79,16 +94,6 @@ const blogs = useSelector(store => store.blogs)
 
 
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      dispatch(addUser(user))
-      console.log(user)
-      blogService.setToken(user.token)
-    }
-  }, [dispatch])
-
 
 
 
@@ -101,17 +106,6 @@ const blogs = useSelector(store => store.blogs)
       </div>
     )
   }
-
-
-const Nav = styled.nav`
-padding: 10px 10px 10px 5px;
-margin: 10px 10px 10px 5px;
-background: aqua;
-`
-const menuElement = {
-padding: 2,
-margin: 2,
-}
 
   return (
 

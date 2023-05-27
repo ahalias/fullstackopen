@@ -1,9 +1,9 @@
+import { useState, useEffect, useRef } from 'react'
 import BlogForm from '../components/BlogForm'
 import Togglable from '../services/toggle'
 import Blog from '../components/Blog'
 import { retrieveBlogs, addNewBlog, deleteBlog, addLike } from '../reducers/blogReducer'
 import { useQuery } from 'react-query'
-import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { showMessage } from '../reducers/notificationReducer'
 import { 
@@ -22,25 +22,27 @@ import {
 
 const Blogs = () => {
 
-  const blogFormRef = useRef()
+    const blogFormRef = useRef()
     const dispatch = useDispatch()
     const notification = useSelector(store => store.notification)
     const blogs = useSelector(store => store.blogs)
     const user = useSelector(store => store.user)
+
+    useEffect(() => {
+      dispatch(retrieveBlogs())
+    }, [dispatch])
   
 
   
     const createNewBlog =  (newBlog) => {
+      blogFormRef.current.toggleVisibility()
+
        dispatch(addNewBlog(newBlog))
         dispatch(showMessage(`A new blog ${newBlog.title} by ${newBlog.author} is added`, 5))
-        blogFormRef.current.toggleVisibility()
-
     }
   
 
-    useEffect(() => {
-        dispatch(retrieveBlogs())
-      }, [dispatch])
+
   
   
   

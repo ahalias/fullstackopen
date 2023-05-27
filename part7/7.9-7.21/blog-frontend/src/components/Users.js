@@ -17,8 +17,8 @@ const [users,] = useContext(userContext)
 <tbody>
 {users && users.map(user => 
     
-    <tr><td>
-<div key={user.id}><a href={`/users/${user.id}`}>{user.username}</a></div>
+    <tr key={user.id}><td>
+<div><a href={`/users/${user.id}`}>{user.username}</a></div>
 </td>
 <td>{user.blogs.length}</td>
 </tr>
