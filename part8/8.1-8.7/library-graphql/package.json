@@ -1,0 +1,27 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "graphql server",
+  "main": "library-backend.js",
+  "scripts": {
+    "start": "nodemon library-backend.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "library-backend"
+  },
+  "keywords": [
+    "graphql"
+  ],
+  "author": "Andrei",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.7.1",
+    "graphql": "^16.6.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
