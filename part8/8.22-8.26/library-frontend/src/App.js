@@ -17,17 +17,22 @@ const App = () => {
     setToken(localStorage.getItem('user-token'))
   }, [])
 
+   const updateCache = (cache, query, addedBook) => {
+    cache.updateQuery(query, ({ allBooks }) => {
+      return {
+        allBooks: [...new Set(allBooks.concat(addedBook))],
+      }
+    })
+  }
+
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
       console.log(data)
       const addedBook = data.data.bookAdded
       alert(`${addedBook.title} added`)
 
-      client.cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
-        return {
-          allPersons: allBooks.concat(addedBook),
-        }
-      })
+      updateCache(client.cache, { query: ALL_BOOKS }, addedBook)
+
     }
   })
 

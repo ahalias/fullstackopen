@@ -67,8 +67,10 @@ const resolvers = {
                 bookAuthor = new Author({name: args.author}) 
                 await bookAuthor.save()
             }
-            const book = new Book ({...args, author: bookAuthor._id})
+            let book = new Book ({...args, author: bookAuthor._id})
             await book.save()
+            book = await Book.findById(book._id).populate('author')
+
             bookAuthor.books = bookAuthor.books.concat(book)
             await bookAuthor.save()
 
